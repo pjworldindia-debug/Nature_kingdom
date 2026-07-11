@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | Nature Kingdom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dddad4",
+                    "on-primary-fixed": "#032109",
+                    "tertiary-container": "#1f4c25",
+                    "outline-variant": "#c2c8be",
+                    "primary-fixed": "#c8ecc5",
+                    "on-primary-fixed-variant": "#2f4e31",
+                    "stevia-green": "#4a7c59",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#2c4a2e",
+                    "secondary-fixed-dim": "#f9bb62",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e6e2dc",
+                    "on-surface-variant": "#424841",
+                    "surface": "#fdf9f3",
+                    "dark-text": "#1a1a18",
+                    "on-tertiary-fixed-variant": "#235028",
+                    "forest-light": "#3d6b40",
+                    "surface-bright": "#fdf9f3",
+                    "on-tertiary-fixed": "#002107",
+                    "error": "#ba1a1a",
+                    "surface-warm": "#fffef9",
+                    "secondary-fixed": "#ffddb3",
+                    "surface-container-low": "#f7f3ed",
+                    "gold-accent": "#c9913c",
+                    "tertiary-fixed-dim": "#a0d39f",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#add0aa",
+                    "on-surface": "#1c1c18",
+                    "gray-text": "#6b6b65",
+                    "primary": "#163319",
+                    "surface-tint": "#476647",
+                    "inverse-surface": "#31302d",
+                    "background": "#fdf9f3",
+                    "outline": "#737970",
+                    "tertiary": "#043510",
+                    "forest": "#2c4a2e",
+                    "cream-bg": "#faf6f0",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#add0aa",
+                    "tertiary-fixed": "#bcf0b9",
+                    "on-secondary-fixed-variant": "#633f00",
+                    "surface-variant": "#e6e2dc",
+                    "sage-accent": "#7a9e7e",
+                    "border-warm": "#e5ddd0",
+                    "on-tertiary-container": "#8abc8a",
+                    "surface-container-high": "#ebe8e2",
+                    "on-secondary-container": "#774e00",
+                    "surface-container-lowest": "#ffffff",
+                    "shilajit-forest": "#1e3320",
+                    "sage-pale": "#e8f0e9",
+                    "surface-container": "#f1ede7",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c18",
+                    "on-primary-container": "#97b995",
+                    "inverse-on-surface": "#f4f0ea",
+                    "secondary": "#825500",
+                    "on-secondary-fixed": "#291800",
+                    "secondary-container": "#ffc167"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "hero-lg-mobile": ["Cormorant Garamond"],
+                    "body-main": ["DM Sans"],
+                    "hero-lg": ["Cormorant Garamond"],
+                    "product-title": ["Cormorant Garamond"],
+                    "body-italic": ["Cormorant Garamond"],
+                    "label-caps": ["DM Sans"],
+                    "section-h2": ["Cormorant Garamond"],
+                    "stat-value": ["DM Sans"],
+                    "button-text": ["DM Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf6f0;
+            color: #1c1c18;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+    <script src="/js/app.js" defer></script>
+</head>
+<body class="bg-cream-bg text-on-background min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-surface-warm p-10 rounded-xl shadow-[0_4px_30px_rgba(0,0,0,0.05)] border border-border-warm relative">
+    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+        <a href="/">
+          <div class="w-12 h-12 bg-forest rounded-full flex items-center justify-center text-white shadow-lg">
+             <span class="material-symbols-outlined text-white">spa</span>
+          </div>
+        </a>
+    </div>
+    
+    <div class="text-center mt-4">
+      <h2 class="font-product-title text-3xl text-forest mb-2">Join the Kingdom</h2>
+      <p class="font-body-main text-gray-text mb-8">Create your account for exclusive access</p>
+    </div>
+    
+    <form class="space-y-6" id="registerForm">
+      <div>
+        <label for="name" class="block font-label-caps text-[10px] text-gray-text mb-1 tracking-widest">FULL NAME</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-cream-bg border border-border-warm focus:border-sage-accent focus:ring-1 focus:ring-sage-accent text-forest font-body-main outline-none transition-all">
+      </div>
+      <div>
+        <label for="email" class="block font-label-caps text-[10px] text-gray-text mb-1 tracking-widest">EMAIL ADDRESS</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-cream-bg border border-border-warm focus:border-sage-accent focus:ring-1 focus:ring-sage-accent text-forest font-body-main outline-none transition-all">
+      </div>
+      <div>
+        <label for="password" class="block font-label-caps text-[10px] text-gray-text mb-1 tracking-widest">PASSWORD</label>
+        <input type="password" id="password" name="password" required class="w-full px-4 py-3 rounded-lg bg-cream-bg border border-border-warm focus:border-sage-accent focus:ring-1 focus:ring-sage-accent text-forest font-body-main outline-none transition-all">
+      </div>
+      
+      <button type="submit" class="w-full py-3 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md mt-4">Create Account</button>
+    </form>
+    
+    <p id="errorMsg" class="text-error text-center text-sm mt-4 hidden"></p>
+    
+    <p class="mt-8 text-center text-sm text-gray-text font-body-main">
+      Already have an account? <a href="/account/login.html" class="text-forest font-bold hover:underline">Sign In</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, _csrf: window.csrfToken })
+        });
+        
+        if (res.ok) {
+          window.location.href = '/account/dashboard.html';
+        } else {
+          const data = await res.json();
+          const err = document.getElementById('errorMsg');
+          err.innerText = data.error || 'Registration failed';
+          err.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

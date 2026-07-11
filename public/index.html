@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nature Kingdom | Himalayan Wisdom for Modern Life</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dddad4",
+                    "on-primary-fixed": "#032109",
+                    "tertiary-container": "#1f4c25",
+                    "outline-variant": "#c2c8be",
+                    "primary-fixed": "#c8ecc5",
+                    "on-primary-fixed-variant": "#2f4e31",
+                    "stevia-green": "#4a7c59",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#2c4a2e",
+                    "secondary-fixed-dim": "#f9bb62",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e6e2dc",
+                    "on-surface-variant": "#424841",
+                    "surface": "#fdf9f3",
+                    "dark-text": "#1a1a18",
+                    "on-tertiary-fixed-variant": "#235028",
+                    "forest-light": "#3d6b40",
+                    "surface-bright": "#fdf9f3",
+                    "on-tertiary-fixed": "#002107",
+                    "error": "#ba1a1a",
+                    "surface-warm": "#fffef9",
+                    "secondary-fixed": "#ffddb3",
+                    "surface-container-low": "#f7f3ed",
+                    "gold-accent": "#c9913c",
+                    "tertiary-fixed-dim": "#a0d39f",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#add0aa",
+                    "on-surface": "#1c1c18",
+                    "gray-text": "#6b6b65",
+                    "primary": "#163319",
+                    "surface-tint": "#476647",
+                    "inverse-surface": "#31302d",
+                    "background": "#fdf9f3",
+                    "outline": "#737970",
+                    "tertiary": "#043510",
+                    "forest": "#2c4a2e",
+                    "cream-bg": "#faf6f0",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#add0aa",
+                    "tertiary-fixed": "#bcf0b9",
+                    "on-secondary-fixed-variant": "#633f00",
+                    "surface-variant": "#e6e2dc",
+                    "sage-accent": "#7a9e7e",
+                    "border-warm": "#e5ddd0",
+                    "on-tertiary-container": "#8abc8a",
+                    "surface-container-high": "#ebe8e2",
+                    "on-secondary-container": "#774e00",
+                    "surface-container-lowest": "#ffffff",
+                    "shilajit-forest": "#1e3320",
+                    "sage-pale": "#e8f0e9",
+                    "surface-container": "#f1ede7",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c18",
+                    "on-primary-container": "#97b995",
+                    "inverse-on-surface": "#f4f0ea",
+                    "secondary": "#825500",
+                    "on-secondary-fixed": "#291800",
+                    "secondary-container": "#ffc167"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "grid-gutter": "2rem",
+                    "stack-md": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "4rem",
+                    "container-max": "1200px",
+                    "section-gap": "8rem"
+            },
+            "fontFamily": {
+                    "hero-lg-mobile": ["Cormorant Garamond"],
+                    "body-main": ["DM Sans"],
+                    "hero-lg": ["Cormorant Garamond"],
+                    "product-title": ["Cormorant Garamond"],
+                    "body-italic": ["Cormorant Garamond"],
+                    "label-caps": ["DM Sans"],
+                    "section-h2": ["Cormorant Garamond"],
+                    "stat-value": ["DM Sans"],
+                    "button-text": ["DM Sans"]
+            },
+            "fontSize": {
+                    "hero-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "300"}],
+                    "body-main": ["16px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "hero-lg": ["88px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                    "product-title": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-italic": ["18px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "section-h2": ["52px", {"lineHeight": "1.15", "fontWeight": "300"}],
+                    "stat-value": ["32px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                    "button-text": ["14px", {"lineHeight": "1.0", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf6f0;
+            color: #1c1c18;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .floating-badge {
+            animation: floating 4s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+    <script src="/js/app.js" defer></script>
+</head>
+<body class="bg-cream-bg text-on-background">
+<!-- Top Navigation Bar -->
+<nav class="fixed w-full top-0 z-50 bg-cream-bg/95 dark:bg-shilajit-forest/95 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center max-w-[1200px] mx-auto px-8 h-20">
+<a href="/" class="flex items-center gap-3">
+<img alt="Nature Kingdom Logo" class="mix-blend-multiply h-12 w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+<div class="font-product-title text-2xl text-forest dark:text-primary-fixed-dim">
+                Nature Kingdom
+            </div>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-forest dark:text-primary-fixed font-bold border-b-2 border-gold-accent pb-1 font-label-caps text-label-caps" href="#story">Our Story</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/sea-buckthorn.html">Sea Buckthorn</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/shilajit.html">Shilajit</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/stevia.html">Stevia</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="https://www.shiprocket.in/shipment-tracking/" target="_blank">Track Order</a>
+</div>
+<div class="flex items-center gap-6">
+<a href="/cart.html" class="hover:text-gold-accent transition-colors text-forest">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</a>
+<a href="/account/login.html" class="hover:text-gold-accent transition-colors text-forest">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-cream-bg">
+<div class="max-w-[1200px] mx-auto px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center z-10">
+<div class="reveal-on-scroll">
+<span class="font-label-caps text-label-caps text-gold-accent tracking-[0.3em] mb-6 block uppercase">Botanical Heritage</span>
+<h1 class="font-hero-lg text-hero-lg text-forest mb-8 leading-tight">Himalayan Wisdom for Modern Life</h1>
+<p class="font-body-main text-lg text-gray-text max-w-lg mb-10 leading-relaxed">
+                Providing accessible, natural health products from the world's highest peaks. Sustainably harvested to bridge ancient wellness traditions with modern life.
+            </p>
+<div class="flex flex-wrap gap-4">
+<a href="#collection" class="bg-forest text-on-primary px-10 py-4 rounded-full font-button-text text-button-text hover:bg-forest-light hover:shadow-lg hover:-translate-y-0.5 transition-all">Explore Collection</a>
+<a href="#story" class="border-1.5 border-gold-accent text-forest px-10 py-4 rounded-full font-button-text text-button-text hover:bg-surface-container transition-colors">Our Process</a>
+</div>
+</div>
+<div class="relative reveal-on-scroll stagger-2">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl relative border-8 border-white/50">
+<img alt="Premium Shilajit resin on Himalayan salt block" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7vOxnsSrq-FRP10piYctb6TMN8lStdEywrpGzfILMQ--8YdNYAyPW-8Hj5r4IX2QijFgt4d9xek3Lp_W8gkV_qVLO_Rdwrp17L23vW_LerkaqFcDATM3sDfKxmEVi_h3ZU2YkKgWYxHkteu-GAMhCG_Vr1BtFeMk2QabpFGcgkagOZHJtzygzda1A22XiAlOg8xNIiNVeD_gitiOrOlhq3gAR043PRRPXqvNKsiAgcSFq_POE7xPc8U45NLfKJq8lJjr9Rc_FIMW2"/>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-surface-warm p-6 rounded-lg shadow-xl max-w-[220px] floating-badge border border-gold-accent/20">
+<p class="font-label-caps text-[10px] text-gold-accent mb-2 tracking-widest">PURITY GUARANTEE</p>
+<p class="font-product-title text-xl text-forest">100% Wild Harvested</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Mission Section -->
+<section class="py-section-gap bg-surface-container-low">
+<div class="max-w-[1200px] mx-auto px-8">
+<div class="flex flex-col items-center text-center mb-16 reveal-on-scroll">
+<h2 class="font-section-h2 text-section-h2 text-forest mb-6">Elevating Daily Vitality</h2>
+<p class="font-body-main text-body-main text-gray-text max-w-2xl">
+                Our mission is simple yet profound: making lives healthier by providing access to the purest, most potent botanicals on Earth. We believe true wellness is a dialogue between nature's wisdom and human potential.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-warm p-10 rounded-xl shadow-sm hover:shadow-md transition-all group reveal-on-scroll stagger-1 border border-transparent hover:border-gold-accent/20">
+<div class="w-12 h-12 bg-sage-pale rounded-full flex items-center justify-center text-forest mb-6 group-hover:bg-gold-accent group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="eco">eco</span>
+</div>
+<h3 class="font-product-title text-2xl text-forest mb-4">Ethical Sourcing</h3>
+<p class="font-body-main text-body-main text-gray-text">We partner directly with high-altitude farming cooperatives to ensure fair trade and regenerative practices.</p>
+</div>
+<div class="bg-surface-warm p-10 rounded-xl shadow-sm hover:shadow-md transition-all group reveal-on-scroll stagger-2 border border-transparent hover:border-gold-accent/20">
+<div class="w-12 h-12 bg-sage-pale rounded-full flex items-center justify-center text-forest mb-6 group-hover:bg-gold-accent group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="science">science</span>
+</div>
+<h3 class="font-product-title text-2xl text-forest mb-4">Lab Verified</h3>
+<p class="font-body-main text-body-main text-gray-text">Every batch undergoes rigorous third-party testing for purity, potency, and the absence of contaminants.</p>
+</div>
+<div class="bg-surface-warm p-10 rounded-xl shadow-sm hover:shadow-md transition-all group reveal-on-scroll stagger-3 border border-transparent hover:border-gold-accent/20">
+<div class="w-12 h-12 bg-sage-pale rounded-full flex items-center justify-center text-forest mb-6 group-hover:bg-gold-accent group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h3 class="font-product-title text-2xl text-forest mb-4">Potent Synergy</h3>
+<p class="font-body-main text-body-main text-gray-text">Our formulations are designed to work harmoniously with your body’s natural biological rhythms.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Founder's Story -->
+<section id="story" class="py-section-gap overflow-hidden bg-cream-bg">
+<div class="max-w-[1200px] mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<div class="lg:col-span-7 reveal-on-scroll">
+<div class="relative">
+<img alt="Founder" class="w-full rounded-xl shadow-2xl border border-gold-accent/10 object-cover" src="/images/1783668623895.jpeg"/>
+<div class="absolute -right-8 bottom-12 hidden lg:block">
+<img alt="Sea Buckthorn Berries" class="w-64 h-64 rounded-xl shadow-xl object-cover border-8 border-cream-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMarEUWGJSuJ7-SHO01bJO5ayxeEhm93FEYSPtdbjcOXsAzckHFMmA1ck5DB5CQlHJvmOQYZBjeaJBGdkssjVpKvOYU7BKLFkG0ykpSzoQE_j2D5XCkvE5uwoX40TZ6lUMRytvOnbSLZVp1vqkDUhoVj9mJuhhO6iKrw2tcNHG_m6WdPs5hwsuHz9Uezjll6gqqN33C25Lr6uPQqOL7ND_iidPKDeHx73xwmUNYnE03vIDd5k_7nNo0v7vOlwTTxLQHlR2bzDxxOBz"/>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 reveal-on-scroll stagger-2">
+<span class="font-label-caps text-label-caps text-gold-accent tracking-[0.3em] mb-6 block">OUR ORIGINS</span>
+<h2 class="font-section-h2 text-section-h2 text-forest mb-8">A Vision for Pure Wellness</h2>
+<div class="space-y-6 font-body-main text-body-main text-gray-text">
+<p>Nature Kingdom began with a journey to the remote valleys of Ladakh, where I witnessed the extraordinary resilience of high-altitude flora. There, ancient wisdom wasn't just folklore; it was a way of life that fostered longevity and vibrant health.</p>
+<p class="italic font-body-italic text-forest border-l-2 border-gold-accent pl-6 py-2">"I wanted to bring the uncompromising purity of the mountains to the busy professional, creating a bridge between untouched nature and the modern home."</p>
+<p>Our commitment remains the same as that first day: No fillers, no shortcuts. Only the most potent expressions of nature's life force, bottled with care and respect for the earth.</p>
+</div>
+<div class="mt-10">
+<p class="font-product-title text-xl text-forest">Aria Himalayan</p>
+<p class="font-label-caps text-[10px] text-gray-text mt-1 tracking-widest">FOUNDER &amp; VISIONARY</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Highlights -->
+<section id="collection" class="py-section-gap bg-surface">
+<div class="max-w-[1200px] mx-auto px-8">
+<div class="flex justify-between items-end mb-16 reveal-on-scroll">
+<div>
+<span class="font-label-caps text-label-caps text-gold-accent tracking-[0.3em] mb-4 block uppercase">The Collection</span>
+<h2 class="font-section-h2 text-section-h2 text-forest">Earth's Finest Treasures</h2>
+</div>
+<a class="font-label-caps text-label-caps text-forest border-b border-gold-accent pb-1 hover:text-gold-accent transition-colors hidden md:block" href="#collection">VIEW ALL PRODUCTS</a>
+</div>
+<div id="dynamic-homepage-products" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Products loaded dynamically via JS -->
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-shilajit-forest w-full py-16 border-t border-border-warm dark:border-primary-container">
+<div class="max-w-[1200px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-stack-lg">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<img alt="Nature Kingdom Logo" class="mix-blend-multiply h-10 w-10 object-contain brightness-0 grayscale opacity-70 dark:brightness-100 dark:grayscale-0 dark:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+<div class="font-product-title text-2xl text-forest dark:text-primary-fixed">Nature Kingdom</div>
+</div>
+<p class="font-body-main text-body-main text-gray-text">Elevating modern wellness through the ancient wisdom of the Himalayas.</p>
+<div class="flex gap-4">
+<a class="text-forest hover:text-gold-accent transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-forest hover:text-gold-accent transition-colors" href="#"><span class="material-symbols-outlined">camera</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-forest dark:text-primary-fixed mb-6 tracking-widest">EXPLORE</h4>
+<ul class="space-y-4 font-body-main text-body-main">
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="#story">Our Story</a></li>
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/products/sea-buckthorn.html">Sea Buckthorn</a></li>
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/products/shilajit.html">Shilajit</a></li>
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/products/stevia.html">Stevia</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-forest dark:text-primary-fixed mb-6 tracking-widest">CUSTOMER CARE</h4>
+<ul class="space-y-4 font-body-main text-body-main">
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/shipping-returns.html">Shipping & Refund Policy</a></li>
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/terms.html">Terms</a></li>
+<li><a class="text-gray-text dark:text-outline-variant hover:text-gold-accent transition-colors" href="/privacy.html">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-forest dark:text-primary-fixed mb-6 tracking-widest">NEWSLETTER</h4>
+<p class="font-body-main text-body-main text-gray-text mb-4">Join our inner circle for botanical insights and exclusive offers.</p>
+<div class="relative">
+<input class="w-full bg-transparent border-b border-gold-accent py-2 focus:border-forest outline-none transition-colors font-body-main placeholder:text-gray-text/50" placeholder="Email Address" type="email"/>
+<button class="absolute right-0 top-2 text-forest hover:text-gold-accent transition-colors"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-8 mt-16 pt-8 border-t border-border-warm/50 text-center">
+<p class="font-label-caps text-[10px] text-gray-text uppercase tracking-widest">© 2026 Nature Kingdom. Organic Luxury for the Discerning Soul.</p>
+</div>
+</footer>
+<script>
+    // Add to cart function for the buttons
+    async function addToCart(productId) {
+      const qtyEl = document.getElementById('qty');
+      const qty = qtyEl ? (parseInt(qtyEl.value) || 1) : 1;
+      try {
+        const res = await fetch('/api/cart', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId: productId, quantity: qty, _csrf: window.csrfToken })
+        });
+        
+        if (res.ok) {
+          showToast('Added to cart successfully!');
+        } else if (res.status === 401) {
+          // Guest cart logic
+          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+          const existing = guestCart.find(item => item.productId === productId);
+          if (existing) {
+            existing.quantity += qty;
+          } else {
+            guestCart.push({ productId, quantity: qty });
+          }
+          localStorage.setItem('guestCart', JSON.stringify(guestCart));
+          showToast('Added to cart successfully!');
+        } else {
+          const data = await res.json();
+          showToast(data.error || 'Failed to add to cart', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Something went wrong. Please try again.', 'error');
+      }
+    }
+
+    // Simple Intersection Observer for reveal animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+        observer.observe(el);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('shadow-md');
+        } else {
+            nav.classList.remove('shadow-md');
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const res = await fetch('/api/products');
+            if (res.ok) {
+                const products = await res.json();
+                const container = document.getElementById('dynamic-homepage-products');
+                if (container && products.length > 0) {
+                    container.innerHTML = products.map((p, i) => {
+                        const imgUrl = (typeof p.images === 'string' ? JSON.parse(p.images) : p.images)[0]?.url || 'https://via.placeholder.com/300';
+                        return `
+                        <div class="group reveal-on-scroll stagger-${i+1}">
+                            <a href="/products/${p.slug}.html">
+                                <div class="aspect-square bg-surface-container rounded-xl overflow-hidden mb-6 relative">
+                                    <img alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${imgUrl}"/>
+                                </div>
+                                <h3 class="font-product-title text-2xl text-forest mb-2">${p.name}</h3>
+                                <p class="font-body-main text-body-main text-gray-text mb-4">${p.tagline || ''}</p>
+                                <p class="font-stat-value text-xl text-forest">₹${Number(p.price).toFixed(2)}</p>
+                            </a>
+                            <button type="button" onclick="addToCart(${p.id})" class="mt-6 w-full py-3 border border-forest text-forest font-button-text text-button-text rounded-full hover:bg-forest hover:text-white transition-all">Add to Bag</button>
+                        </div>
+                        `;
+                    }).join('');
+                }
+            }
+        } catch(e) { console.error('Failed to load products', e); }
+    });
+</script>
+</body></html>

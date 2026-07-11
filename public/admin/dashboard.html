@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nature Kingdom | Admin Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#633f00",
+                    "cream-bg": "#faf6f0",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#a0d39f",
+                    "outline-variant": "#c2c8be",
+                    "secondary": "#825500",
+                    "inverse-primary": "#add0aa",
+                    "on-surface-variant": "#424841",
+                    "gray-text": "#6b6b65",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f7f3ed",
+                    "on-tertiary-container": "#8abc8a",
+                    "error-container": "#ffdad6",
+                    "shilajit-forest": "#1e3320",
+                    "outline": "#737970",
+                    "surface-container-high": "#ebe8e2",
+                    "on-surface": "#1c1c18",
+                    "inverse-on-surface": "#f4f0ea",
+                    "secondary-fixed": "#ffddb3",
+                    "primary": "#163319",
+                    "on-background": "#1c1c18",
+                    "primary-fixed-dim": "#add0aa",
+                    "on-tertiary-fixed": "#002107",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dddad4",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e6e2dc",
+                    "stevia-green": "#4a7c59",
+                    "tertiary": "#043510",
+                    "on-tertiary-fixed-variant": "#235028",
+                    "tertiary-fixed": "#bcf0b9",
+                    "on-secondary-container": "#774e00",
+                    "background": "#fdf9f3",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#1f4c25",
+                    "forest-light": "#3d6b40",
+                    "surface-variant": "#e6e2dc",
+                    "surface": "#fdf9f3",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#291800",
+                    "surface-container": "#f1ede7",
+                    "on-primary": "#ffffff",
+                    "sage-accent": "#7a9e7e",
+                    "on-primary-fixed": "#032109",
+                    "gold-accent": "#c9913c",
+                    "on-primary-fixed-variant": "#2f4e31",
+                    "inverse-surface": "#31302d",
+                    "primary-fixed": "#c8ecc5",
+                    "surface-bright": "#fdf9f3",
+                    "dark-text": "#1a1a18",
+                    "border-warm": "#e5ddd0",
+                    "surface-warm": "#fffef9",
+                    "secondary-fixed-dim": "#f9bb62",
+                    "surface-tint": "#476647",
+                    "primary-container": "#2c4a2e",
+                    "sage-pale": "#e8f0e9",
+                    "on-primary-container": "#97b995",
+                    "forest": "#2c4a2e",
+                    "secondary-container": "#ffc167"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "1.5rem",
+                    "stack-lg": "4rem",
+                    "stack-sm": "0.5rem",
+                    "section-gap": "8rem",
+                    "grid-gutter": "2rem",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "section-h2": ["Cormorant Garamond"],
+                    "hero-lg": ["Cormorant Garamond"],
+                    "body-main": ["DM Sans"],
+                    "body-italic": ["Cormorant Garamond"],
+                    "button-text": ["DM Sans"],
+                    "stat-value": ["DM Sans"],
+                    "label-caps": ["DM Sans"],
+                    "hero-lg-mobile": ["Cormorant Garamond"],
+                    "product-title": ["Cormorant Garamond"]
+            },
+            "fontSize": {
+                    "section-h2": ["52px", {"lineHeight": "1.15", "fontWeight": "300"}],
+                    "hero-lg": ["88px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                    "body-main": ["16px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "body-italic": ["18px", {"lineHeight": "1.7", "fontWeight": "400"}],
+                    "button-text": ["14px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                    "stat-value": ["32px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                    "hero-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "300"}],
+                    "product-title": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(255, 254, 249, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 221, 208, 0.5);
+        }
+        .sidebar-active {
+            color: #163319;
+            font-weight: 700;
+            background: rgba(122, 158, 126, 0.1);
+            border-right: 3px solid #7a9e7e;
+        }
+    </style>
+    <script src="/js/app.js" defer></script>
+</head>
+<body class="bg-cream-bg font-body-main text-on-surface antialiased min-h-screen flex overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-surface-container-low border-r border-border-warm flex flex-col h-full z-40">
+<div class="px-8 py-10">
+<a href="/" class="font-product-title text-product-title text-forest hover:text-gold-accent transition-colors block">Nature Kingdom</a>
+<p class="font-label-caps text-label-caps text-gray-text mt-2">Admin Portal</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="sidebar-active flex items-center px-4 py-3 rounded-lg text-forest transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-button-text text-button-text">Overview</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-gray-text hover:bg-sage-pale hover:text-forest transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-button-text text-button-text">Products</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-gray-text hover:bg-sage-pale hover:text-forest transition-all group" href="#">
+<span class="material-symbols-outlined mr-3">shopping_bag</span>
+<span class="font-button-text text-button-text">Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-gray-text hover:bg-sage-pale hover:text-forest transition-all group" href="#" id="logoutBtn">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-button-text text-button-text">Sign Out</span>
+</a>
+</nav>
+<div class="p-8 border-t border-border-warm">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-cream-bg">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="ml-3">
+<p class="font-button-text text-button-text text-forest" id="adminName">Loading...</p>
+<p class="text-[10px] font-label-caps text-gray-text uppercase">Store Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 h-screen overflow-y-auto relative bg-cream-bg">
+<!-- Floating Glow Orb -->
+<div class="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-sage-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Header -->
+<header class="sticky top-0 z-30 flex items-center justify-between px-12 h-24 glass-panel border-b-0">
+<div>
+<h2 class="font-section-h2 text-[32px] text-forest">Dashboard Overview</h2>
+</div>
+<div class="flex items-center space-y-0 space-x-6">
+<button class="relative p-2 text-forest hover:bg-sage-pale rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-gold-accent rounded-full border-2 border-cream-bg"></span>
+</button>
+<div class="h-6 w-px bg-border-warm"></div>
+<button class="flex items-center font-button-text text-button-text text-forest border border-forest px-6 py-2 rounded-full hover:bg-forest hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px] mr-2">add</span>
+                    New Campaign
+                </button>
+</div>
+</header>
+<!-- Content Content -->
+<div class="max-w-[1200px] mx-auto px-12 py-12 space-y-12">
+<!-- Quick Analytics Bento -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 p-8 bg-surface-warm rounded-xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-border-warm">
+<p class="font-label-caps text-label-caps text-gray-text uppercase tracking-widest mb-4">Total Revenue</p>
+<div class="flex items-end justify-between">
+<div>
+<h3 class="font-stat-value text-stat-value text-forest">€42,850.00</h3>
+<p class="text-sage-accent text-sm mt-2 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
+                                +12.5% from last month
+                            </p>
+</div>
+<div class="h-16 w-32">
+<canvas class="w-full h-full" id="miniRevenueChart"></canvas>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-warm rounded-xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-border-warm">
+<p class="font-label-caps text-label-caps text-gray-text uppercase tracking-widest mb-4">Active Orders</p>
+<h3 class="font-stat-value text-stat-value text-forest">148</h3>
+<p class="text-gray-text text-sm mt-2">12 pending fulfillment</p>
+</div>
+<div class="p-8 bg-forest text-cream-bg rounded-xl shadow-[0_10px_40px_rgba(22,51,25,0.15)] border border-forest">
+<p class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-widest mb-4">Avg. Order Value</p>
+<h3 class="font-stat-value text-stat-value">€84.20</h3>
+<div class="mt-4 flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-forest bg-sage-accent"></div>
+<div class="w-8 h-8 rounded-full border-2 border-forest bg-gold-accent"></div>
+<div class="w-8 h-8 rounded-full border-2 border-forest bg-outline"></div>
+</div>
+</div>
+</section>
+<!-- Product Price & Inventory Management -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<div>
+<h4 class="font-section-h2 text-[28px] text-forest">Inventory &amp; Pricing</h4>
+<p class="font-body-main text-gray-text">Real-time botanical product management</p>
+</div>
+<button class="text-forest hover:underline font-button-text text-button-text">View Full Inventory</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Sea Buckthorn -->
+<div class="group bg-surface-warm rounded-xl border border-border-warm overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvGj9LcWiS0bBTClMYbRhllQ1C5pVvcY8n3IkfBoOgbrWVY0cDwlPC6P2PEwUsu7nCVyQrs1vyH5fVg2cj1lSIXbNc-Xh8U6QFS0LHlWbE1DfqePNIk2rZWsr6Cz4w06z_RGeOyFJW2FJb8fyrP7zoNdmP68If_deXc4VEOSj4oC8FuH5UYV2ZOLwjCs0l0bU4ZTWLhPsPFWzba8iZpNQcP47nyeEZvU0-HCg9iz964MPymVcjRPIClTih46MfN6ni6mJapgcEIUc0"/>
+<span class="absolute top-4 left-4 bg-sage-pale/90 backdrop-blur-md px-3 py-1 rounded-full text-forest font-label-caps text-[10px]">IN STOCK</span>
+</div>
+<div class="p-6">
+<h5 class="font-product-title text-xl text-forest mb-4">Sea Buckthorn Elixir</h5>
+<div class="space-y-4">
+<label class="block">
+<span class="font-label-caps text-[10px] text-gray-text block mb-1">UNIT PRICE (INR)</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-forest">₹</span>
+<input class="w-full pl-8 pr-4 py-2 rounded-lg bg-warm-white border-border-warm focus:border-sage-accent focus:ring-0 text-forest font-stat-value text-lg" type="text" value="3499.00"/>
+</div>
+</label>
+<button class="w-full py-3 bg-sage-pale text-forest font-button-text text-button-text rounded-lg hover:bg-forest hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] mr-2">upload</span>
+                                    Update Image
+                                </button>
+</div>
+</div>
+</div>
+<!-- Shilajit -->
+<div class="group bg-surface-warm rounded-xl border border-border-warm overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTCBAP1NMXMNG-DR6E2GrsVXwY2QLeED9H0kYdkx7WIofQimFQPFHVyfv9x2xrB-aGblz3IoPam8Ag1hc8qakqZJOd69aWOFnsaWyKhTs2-ipetDuEO7hN8hP6wt2pyfpPLtrVs1lRBe_yC8Q2pbrv75Uz_u4ypSMIpFPQx0J5xccvqIgiZALYlcRzRYf-fLV2g4msrvUh6pt2_4aoKr6rm4qk8_YL9RnBj3JIrMZWi09yLYTvnhJMs_HnK0y7s_ee7GpORIhdK7pj"/>
+<span class="absolute top-4 left-4 bg-gold-accent/90 backdrop-blur-md px-3 py-1 rounded-full text-white font-label-caps text-[10px]">LOW STOCK</span>
+</div>
+<div class="p-6">
+<h5 class="font-product-title text-xl text-forest mb-4">Pure Himalayan Shilajit</h5>
+<div class="space-y-4">
+<label class="block">
+<span class="font-label-caps text-[10px] text-gray-text block mb-1">UNIT PRICE (INR)</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-forest">₹</span>
+<input class="w-full pl-8 pr-4 py-2 rounded-lg bg-warm-white border-border-warm focus:border-sage-accent focus:ring-0 text-forest font-stat-value text-lg" type="text" value="2999.00"/>
+</div>
+</label>
+<button class="w-full py-3 bg-sage-pale text-forest font-button-text text-button-text rounded-lg hover:bg-forest hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] mr-2">upload</span>
+                                    Update Image
+                                </button>
+</div>
+</div>
+</div>
+<!-- Stevia -->
+<div class="group bg-surface-warm rounded-xl border border-border-warm overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABn0AEjGPuzzMl2iYhgKAqPXceKNuZyq6_FNK4arvHn-7ZpykfCqXn0aQ_d3Tg_qZUqGc2zaOcoTLDpp7EyZk70g5WupqIu0hXVEGGx0lM2HBsqiGrG9zm2B-Wxibl4Fjlhaq51GMSZFC9hI9NoKZ6KwH-ahFeeYcCQ8PifFi_KfWERisVC4T5RY4sh9qqzukbFiO0tWndeqs4-MB3ESKTbazfO8eA2_oxtBztY_vccHKWPu525gH7u-Dkn5uCT-vU4bXhmEvxQcxX"/>
+</div>
+<div class="p-6">
+<h5 class="font-product-title text-xl text-forest mb-4">Organic Stevia Drops</h5>
+<div class="space-y-4">
+<label class="block">
+<span class="font-label-caps text-[10px] text-gray-text block mb-1">UNIT PRICE (INR)</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-forest">₹</span>
+<input class="w-full pl-8 pr-4 py-2 rounded-lg bg-warm-white border-border-warm focus:border-sage-accent focus:ring-0 text-forest font-stat-value text-lg" type="text" value="599.00"/>
+</div>
+</label>
+<button class="w-full py-3 bg-sage-pale text-forest font-button-text text-button-text rounded-lg hover:bg-forest hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] mr-2">upload</span>
+                                    Update Image
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Orders Table -->
+<section class="glass-panel rounded-2xl p-8 border border-border-warm">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-section-h2 text-[28px] text-forest">Recent Orders</h4>
+<div class="flex gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-text">search</span>
+<input class="pl-10 pr-4 py-2 border-border-warm rounded-full bg-cream-bg text-sm focus:ring-sage-accent focus:border-sage-accent" placeholder="Search orders..." type="text"/>
+</div>
+<button class="px-4 py-2 border border-border-warm rounded-full text-forest font-button-text text-button-text hover:bg-sage-pale transition-all">Export CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-border-warm text-gray-text font-label-caps text-[11px] tracking-widest">
+<th class="pb-4 font-medium uppercase">Order ID</th>
+<th class="pb-4 font-medium uppercase">Customer</th>
+<th class="pb-4 font-medium uppercase">Status</th>
+<th class="pb-4 font-medium uppercase">Date</th>
+<th class="pb-4 font-medium uppercase">Total</th>
+<th class="pb-4 font-medium uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-warm/30">
+<tr class="group hover:bg-sage-pale/20 transition-colors">
+<td class="py-5 font-button-text text-forest">#NK-82741</td>
+<td class="py-5">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full bg-sage-pale text-forest text-[10px] flex items-center justify-center font-bold mr-3">EH</div>
+<span class="text-on-surface font-medium">Elena Hartmann</span>
+</div>
+</td>
+<td class="py-5">
+<span class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 text-[10px] font-bold uppercase">Fulfilled</span>
+</td>
+<td class="py-5 text-gray-text text-sm">Oct 24, 2023</td>
+<td class="py-5 font-stat-value text-sm text-forest">₹12500.00</td>
+<td class="py-5 text-right">
+<button class="text-forest hover:text-sage-accent transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-sage-pale/20 transition-colors">
+<td class="py-5 font-button-text text-forest">#NK-82740</td>
+<td class="py-5">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full bg-gold-accent/10 text-gold-accent text-[10px] flex items-center justify-center font-bold mr-3">JM</div>
+<span class="text-on-surface font-medium">Julian Morel</span>
+</div>
+</td>
+<td class="py-5">
+<span class="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold uppercase">Processing</span>
+</td>
+<td class="py-5 text-gray-text text-sm">Oct 24, 2023</td>
+<td class="py-5 font-stat-value text-sm text-forest">₹6500.00</td>
+<td class="py-5 text-right">
+<button class="text-forest hover:text-sage-accent transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-sage-pale/20 transition-colors">
+<td class="py-5 font-button-text text-forest">#NK-82739</td>
+<td class="py-5">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full bg-shilajit-forest text-cream-bg text-[10px] flex items-center justify-center font-bold mr-3">SA</div>
+<span class="text-on-surface font-medium">Sofia Al-Farsi</span>
+</div>
+</td>
+<td class="py-5">
+<span class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">On Hold</span>
+</td>
+<td class="py-5 text-gray-text text-sm">Oct 23, 2023</td>
+<td class="py-5 font-stat-value text-sm text-forest">₹18500.50</td>
+<td class="py-5 text-right">
+<button class="text-forest hover:text-sage-accent transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Sticky Footer for Portal -->
+<footer class="mt-20 border-t border-border-warm bg-surface-container-low py-12 px-12">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center opacity-60">
+<p class="font-label-caps text-label-caps text-forest">© 2024 Nature Kingdom Admin Portal</p>
+<div class="flex gap-8 mt-4 md:mt-0">
+<a class="font-label-caps text-[10px] hover:text-gold-accent transition-colors" href="#">Support</a>
+<a class="font-label-caps text-[10px] hover:text-gold-accent transition-colors" href="#">Security</a>
+<a class="font-label-caps text-[10px] hover:text-gold-accent transition-colors" href="#">Logs</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple Canvas drawing for the mini sparkline
+        document.addEventListener('DOMContentLoaded', async () => {
+            const canvas = document.getElementById('miniRevenueChart');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                const gradient = ctx.createLinearGradient(0, 0, 0, 60);
+                gradient.addColorStop(0, 'rgba(122, 158, 126, 0.4)');
+                gradient.addColorStop(1, 'rgba(122, 158, 126, 0)');
+
+                ctx.beginPath();
+                ctx.moveTo(0, 50);
+                ctx.bezierCurveTo(20, 45, 40, 10, 60, 20);
+                ctx.bezierCurveTo(80, 30, 100, 40, 128, 5);
+                ctx.strokeStyle = '#7a9e7e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.lineTo(128, 64);
+                ctx.lineTo(0, 64);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+
+            // Input focus effect
+            const inputs = document.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.closest('.group')?.classList.add('ring-2', 'ring-sage-accent/20');
+                });
+                input.addEventListener('blur', () => {
+                    input.parentElement.closest('.group')?.classList.remove('ring-2', 'ring-sage-accent/20');
+                });
+            });
+            
+            // Authentication and profile setup
+            try {
+                const res = await fetch('/api/auth/me');
+                if (!res.ok) throw new Error('Not authenticated');
+                const { user } = await res.json();
+                
+                document.getElementById('adminName').innerText = user.name;
+            } catch (err) {
+                window.location.href = '/account/login.html';
+            }
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    await fetch('/api/auth/logout', { 
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ _csrf: window.csrfToken })
+                    });
+                    window.location.href = '/';
+                } catch(err) {
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+</body></html>

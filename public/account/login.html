@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Nature Kingdom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dddad4",
+                    "on-primary-fixed": "#032109",
+                    "tertiary-container": "#1f4c25",
+                    "outline-variant": "#c2c8be",
+                    "primary-fixed": "#c8ecc5",
+                    "on-primary-fixed-variant": "#2f4e31",
+                    "stevia-green": "#4a7c59",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#2c4a2e",
+                    "secondary-fixed-dim": "#f9bb62",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e6e2dc",
+                    "on-surface-variant": "#424841",
+                    "surface": "#fdf9f3",
+                    "dark-text": "#1a1a18",
+                    "on-tertiary-fixed-variant": "#235028",
+                    "forest-light": "#3d6b40",
+                    "surface-bright": "#fdf9f3",
+                    "on-tertiary-fixed": "#002107",
+                    "error": "#ba1a1a",
+                    "surface-warm": "#fffef9",
+                    "secondary-fixed": "#ffddb3",
+                    "surface-container-low": "#f7f3ed",
+                    "gold-accent": "#c9913c",
+                    "tertiary-fixed-dim": "#a0d39f",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#add0aa",
+                    "on-surface": "#1c1c18",
+                    "gray-text": "#6b6b65",
+                    "primary": "#163319",
+                    "surface-tint": "#476647",
+                    "inverse-surface": "#31302d",
+                    "background": "#fdf9f3",
+                    "outline": "#737970",
+                    "tertiary": "#043510",
+                    "forest": "#2c4a2e",
+                    "cream-bg": "#faf6f0",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#add0aa",
+                    "tertiary-fixed": "#bcf0b9",
+                    "on-secondary-fixed-variant": "#633f00",
+                    "surface-variant": "#e6e2dc",
+                    "sage-accent": "#7a9e7e",
+                    "border-warm": "#e5ddd0",
+                    "on-tertiary-container": "#8abc8a",
+                    "surface-container-high": "#ebe8e2",
+                    "on-secondary-container": "#774e00",
+                    "surface-container-lowest": "#ffffff",
+                    "shilajit-forest": "#1e3320",
+                    "sage-pale": "#e8f0e9",
+                    "surface-container": "#f1ede7",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c18",
+                    "on-primary-container": "#97b995",
+                    "inverse-on-surface": "#f4f0ea",
+                    "secondary": "#825500",
+                    "on-secondary-fixed": "#291800",
+                    "secondary-container": "#ffc167"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "hero-lg-mobile": ["Cormorant Garamond"],
+                    "body-main": ["DM Sans"],
+                    "hero-lg": ["Cormorant Garamond"],
+                    "product-title": ["Cormorant Garamond"],
+                    "body-italic": ["Cormorant Garamond"],
+                    "label-caps": ["DM Sans"],
+                    "section-h2": ["Cormorant Garamond"],
+                    "stat-value": ["DM Sans"],
+                    "button-text": ["DM Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf6f0;
+            color: #1c1c18;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+    <script src="/js/app.js" defer></script>
+</head>
+<body class="bg-cream-bg text-on-background min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-surface-warm p-10 rounded-xl shadow-[0_4px_30px_rgba(0,0,0,0.05)] border border-border-warm relative">
+    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+        <a href="/">
+          <div class="flex items-center justify-center">
+             <img alt="Nature Kingdom Logo" class="h-12 w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+          </div>
+        </a>
+    </div>
+    
+    <div class="text-center mt-4">
+      <h2 class="font-product-title text-3xl text-forest mb-2">Welcome Back</h2>
+      <p class="font-body-main text-gray-text mb-8">Sign in to your kingdom</p>
+    </div>
+    
+    <form class="space-y-6" id="loginForm">
+      <div>
+        <label for="email" class="block font-label-caps text-[10px] text-gray-text mb-1 tracking-widest">EMAIL ADDRESS</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-cream-bg border border-border-warm focus:border-sage-accent focus:ring-1 focus:ring-sage-accent text-forest font-body-main outline-none transition-all">
+      </div>
+      <div>
+        <label for="password" class="block font-label-caps text-[10px] text-gray-text mb-1 tracking-widest">PASSWORD</label>
+        <input type="password" id="password" name="password" required class="w-full px-4 py-3 rounded-lg bg-cream-bg border border-border-warm focus:border-sage-accent focus:ring-1 focus:ring-sage-accent text-forest font-body-main outline-none transition-all">
+      </div>
+      
+      <button type="submit" class="w-full py-3 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md mt-4">Sign In</button>
+    </form>
+    
+    <p id="errorMsg" class="text-error text-center text-sm mt-4 hidden"></p>
+    
+    <div class="mt-8">
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-border-warm"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-surface-warm text-gray-text font-label-caps text-[10px]">OR CONTINUE WITH</span>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <a href="/api/auth/google" class="flex justify-center items-center px-6 py-2 border border-border-warm rounded-full shadow-sm bg-cream-bg font-button-text text-sm hover:bg-sage-pale transition-colors w-full">
+          <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </a>
+      </div>
+    </div>
+    
+    <div class="oauth-error mt-4 text-error text-center text-sm" id="oauthError" hidden>
+      Sign-in was not completed. Please try again.
+    </div>
+    <div class="oauth-error mt-4 text-error text-center text-sm" id="oauthConfigError" hidden>
+      Google Login requires setting your GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the .env file.
+    </div>
+    
+    <p class="mt-8 text-center text-sm text-gray-text font-body-main">
+      Don't have an account? <a href="/account/register.html" class="text-forest font-bold hover:underline">Register</a>
+    </p>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(location.search);
+    if (urlParams.get('error') === 'oauth_failed') {
+      document.getElementById('oauthError').hidden = false;
+    } else if (urlParams.get('error') === 'invalid_client') {
+      document.getElementById('oauthConfigError').hidden = false;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, _csrf: window.csrfToken })
+        });
+        
+        if (res.ok) {
+          window.location.href = '/account/dashboard.html';
+        } else {
+          const data = await res.json();
+          const err = document.getElementById('errorMsg');
+          err.innerText = data.message || 'Login failed';
+          err.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

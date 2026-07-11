@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: "#2c4a2e",
+                        "cream-bg": "#faf6f0",
+                        "gold-accent": "#c9913c"
+                    },
+                    fontFamily: {
+                        "product-title": ["Cormorant Garamond"],
+                        "body-main": ["DM Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-btn.active { background-color: #e8f0e9; color: #2c4a2e; border-right: 3px solid #7a9e7e; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-cream-bg flex h-screen overflow-hidden font-body-main">
+    
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r flex flex-col">
+        <div class="p-8 pb-4">
+            <h2 class="font-product-title text-2xl text-forest">Nature Kingdom</h2>
+            <p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Admin Portal</p>
+        </div>
+        <nav class="flex-1 p-4 space-y-2" id="nav-tabs">
+            <button data-target="orders" class="tab-btn active w-full flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-all text-left">
+                <span class="material-symbols-outlined mr-3">shopping_bag</span> Orders
+            </button>
+            <button data-target="products" class="tab-btn w-full flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-all text-left">
+                <span class="material-symbols-outlined mr-3">inventory_2</span> Products
+            </button>
+            <button data-target="images" class="tab-btn w-full flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-all text-left">
+                <span class="material-symbols-outlined mr-3">image</span> Images
+            </button>
+        </nav>
+        <div class="p-4 border-t">
+            <button id="logoutBtn" class="w-full flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                <span class="material-symbols-outlined mr-3">logout</span> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-10">
+        
+        <!-- Orders Tab -->
+        <div id="orders" class="tab-content active">
+            <h1 class="font-product-title text-4xl text-forest mb-6">Recent Orders</h1>
+            <div class="bg-white rounded-xl shadow-sm border p-6">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b text-xs text-gray-500 uppercase tracking-wider">
+                            <th class="pb-3">Order ID</th>
+                            <th class="pb-3">User ID</th>
+                            <th class="pb-3">Status</th>
+                            <th class="pb-3">Total</th>
+                            <th class="pb-3">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody" class="divide-y text-sm">
+                        <tr><td colspan="5" class="py-4 text-center">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products" class="tab-content">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="font-product-title text-4xl text-forest">Manage Products</h1>
+                <button onclick="document.getElementById('add-product-modal').classList.remove('hidden')" class="bg-forest text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-opacity-90">
+                    <span class="material-symbols-outlined text-[18px]">add</span> Add New Product
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="products-grid">
+                <p>Loading products...</p>
+            </div>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-8 w-[500px] max-w-full">
+                <h2 class="text-2xl font-product-title text-forest mb-4">Add New Product</h2>
+                <form id="add-product-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Product Name</label>
+                        <input type="text" id="new-name" required class="w-full border rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Tagline</label>
+                        <input type="text" id="new-tagline" required class="w-full border rounded px-3 py-2">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Price (₹)</label>
+                            <input type="number" id="new-price" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Stock / Inventory</label>
+                            <input type="number" id="new-stock" value="0" min="0" class="w-full border rounded px-3 py-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Target Page (Collection)</label>
+                        <select id="new-kingdom" required class="w-full border rounded px-3 py-2 bg-white">
+                            <option value="shilajit">Shilajit Page</option>
+                            <option value="sea-buckthorn">Sea Buckthorn Page</option>
+                            <option value="stevia">Stevia Page</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Product Image</label>
+                        <input type="file" id="new-image" required accept="image/*" class="w-full border rounded px-3 py-2">
+                    </div>
+                    <div class="flex gap-4 mt-6">
+                        <button type="button" onclick="document.getElementById('add-product-modal').classList.add('hidden')" class="flex-1 border px-4 py-2 rounded text-gray-600 hover:bg-gray-50">Cancel</button>
+                        <button type="submit" class="flex-1 bg-forest text-white px-4 py-2 rounded hover:bg-opacity-90">Create Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Images Tab -->
+        <div id="images" class="tab-content">
+            <h1 class="font-product-title text-4xl text-forest mb-6">Website Images</h1>
+            <p class="text-gray-600 mb-6">Select an image from the website to upload a replacement. The website will automatically update.</p>
+            <div class="space-y-8" id="images-container">
+                <p>Loading images...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Auth Check
+        async function checkAuth() {
+            const res = await fetch('/api/admin/check-auth');
+            if(!res.ok) window.location.href = '/login.html';
+        }
+        checkAuth();
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            window.location.href = '/login.html';
+        });
+
+        // Tabs
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.add('active');
+            });
+        });
+
+        // Fetch Orders
+        async function loadOrders() {
+            const res = await fetch('/api/admin/orders');
+            const orders = await res.json();
+            const tbody = document.getElementById('orders-tbody');
+            if(orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center">No orders found.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = orders.map(o => `
+                <tr class="hover:bg-gray-50">
+                    <td class="py-4">#${o.id}</td>
+                    <td class="py-4">${o.user_id || 'Guest'}</td>
+                    <td class="py-4"><span class="px-2 py-1 rounded-full text-xs font-semibold ${o.status==='completed'?'bg-green-100 text-green-800':'bg-yellow-100 text-yellow-800'}">${o.status}</span></td>
+                    <td class="py-4">₹${o.total}</td>
+                    <td class="py-4">${new Date(o.created_at).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Fetch Products
+        async function loadProducts() {
+            const res = await fetch('/api/admin/products');
+            const products = await res.json();
+            const grid = document.getElementById('products-grid');
+            
+            // Adjust grid to 4 columns to reduce size by 1/4th
+            grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6";
+
+            const kingdomLabels = { 'shilajit': 'Shilajit', 'sea-buckthorn': 'Sea Buckthorn', 'stevia': 'Stevia' };
+
+            grid.innerHTML = products.map(p => {
+                const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
+                const imgUrl = imgs?.[0]?.url || '';
+                const kingdomLabel = kingdomLabels[p.kingdom] || p.kingdom || 'N/A';
+                const isActive = p.is_active !== false;
+
+                return `
+                <div class="bg-white rounded-xl border shadow-lg overflow-hidden flex flex-col">
+                    <!-- Product Image -->
+                    <div class="relative h-44 bg-gray-50 flex items-center justify-center overflow-hidden">
+                        ${imgUrl
+                            ? `<img src="${imgUrl}" alt="${p.name}" class="max-w-full max-h-full object-contain p-2">`
+                            : `<span class="material-symbols-outlined text-5xl text-gray-300">image</span>`
+                        }
+                        <span class="absolute top-2 right-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${isActive ? 'Active' : 'Inactive'}</span>
+                        <span class="absolute top-2 left-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gold-accent text-white">${kingdomLabel}</span>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Name</label>
+                            <input type="text" id="name-${p.id}" value="${(p.name || '').replace(/"/g, '&quot;')}" class="w-full mt-0.5 border border-gray-200 px-3 py-1.5 rounded text-sm focus:outline-none focus:ring-1 focus:ring-forest">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Tagline</label>
+                            <input type="text" id="tagline-${p.id}" value="${(p.tagline || '').replace(/"/g, '&quot;')}" class="w-full mt-0.5 border border-gray-200 px-3 py-1.5 rounded text-sm focus:outline-none focus:ring-1 focus:ring-forest">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Price (₹)</label>
+                                <input type="number" id="price-${p.id}" value="${p.price}" class="w-full mt-0.5 border border-gray-200 px-3 py-1.5 rounded text-sm focus:outline-none focus:ring-1 focus:ring-forest">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Stock</label>
+                                <input type="number" id="stock-${p.id}" value="${p.stock || 0}" min="0" class="w-full mt-0.5 border border-gray-200 px-3 py-1.5 rounded text-sm focus:outline-none focus:ring-1 focus:ring-forest">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Kingdom</label>
+                                <select id="kingdom-${p.id}" class="w-full mt-0.5 border border-gray-200 px-3 py-1.5 rounded text-sm bg-white focus:outline-none focus:ring-1 focus:ring-forest">
+                                    <option value="shilajit" ${p.kingdom === 'shilajit' ? 'selected' : ''}>Shilajit</option>
+                                    <option value="sea-buckthorn" ${p.kingdom === 'sea-buckthorn' ? 'selected' : ''}>Sea Buckthorn</option>
+                                    <option value="stevia" ${p.kingdom === 'stevia' ? 'selected' : ''}>Stevia</option>
+                                </select>
+                            </div>
+                            <div class="flex items-end">
+                                <label class="flex items-center gap-2 cursor-pointer py-1.5">
+                                    <input type="checkbox" id="active-${p.id}" ${isActive ? 'checked' : ''} class="w-4 h-4 rounded border-gray-300 text-forest focus:ring-forest">
+                                    <span class="text-sm text-gray-600">Active</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Replace Image</label>
+                            <div class="flex gap-2 mt-0.5">
+                                <input type="file" id="img-${p.id}" accept="image/*" class="flex-1 text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-cream-bg file:text-forest hover:file:bg-gold-accent hover:file:text-white">
+                                <button onclick="uploadProductImage(${p.id})" class="px-3 py-1 bg-gold-accent text-white text-xs rounded-md hover:opacity-90 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">upload</span> Upload
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="border-t p-4 flex gap-3">
+                        <button onclick="updateProduct(${p.id})" class="flex-1 bg-forest text-white py-2 rounded-md text-sm font-semibold hover:opacity-90 flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-base">save</span> Update
+                        </button>
+                        <button onclick="deleteProduct(${p.id}, '${(p.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;')}')" class="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-semibold hover:opacity-90 flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-base">delete</span> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        async function updateProduct(id) {
+            const name = document.getElementById(`name-${id}`).value;
+            const tagline = document.getElementById(`tagline-${id}`).value;
+            const price = document.getElementById(`price-${id}`).value;
+            const stock = document.getElementById(`stock-${id}`).value;
+            const kingdom = document.getElementById(`kingdom-${id}`).value;
+            const is_active = document.getElementById(`active-${id}`).checked;
+
+            try {
+                const res = await fetch(`/api/admin/products/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, tagline, price, stock, kingdom, is_active })
+                });
+                if (res.ok) {
+                    alert('Product updated successfully!');
+                    loadProducts();
+                } else {
+                    alert('Error updating product');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error updating product');
+            }
+        }
+
+        async function deleteProduct(id, name) {
+            if (!confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+            try {
+                const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    alert('Product deleted successfully!');
+                    loadProducts();
+                } else {
+                    alert('Error deleting product');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error deleting product');
+            }
+        }
+
+        async function uploadProductImage(id) {
+            const fileInput = document.getElementById(`img-${id}`);
+            if (!fileInput.files[0]) return alert('Please select an image file first.');
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            try {
+                const res = await fetch(`/api/admin/products/${id}/image`, { method: 'POST', body: formData });
+                if (res.ok) {
+                    alert('Image updated successfully!');
+                    loadProducts();
+                } else {
+                    alert('Error uploading image');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error uploading image');
+            }
+        }
+
+        // Add Product Submit
+        document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('name', document.getElementById('new-name').value);
+            formData.append('tagline', document.getElementById('new-tagline').value);
+            formData.append('price', document.getElementById('new-price').value);
+            formData.append('stock', document.getElementById('new-stock').value || '0');
+            formData.append('kingdom', document.getElementById('new-kingdom').value);
+            formData.append('image', document.getElementById('new-image').files[0]);
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerText = 'Creating...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/admin/products', {
+                    method: 'POST',
+                    body: formData
+                });
+                if(res.ok) {
+                    alert('Product created successfully!');
+                    document.getElementById('add-product-modal').classList.add('hidden');
+                    e.target.reset();
+                    loadProducts();
+                } else {
+                    alert('Error creating product');
+                }
+            } catch(err) {
+                console.error(err);
+                alert('Error creating product');
+            } finally {
+                btn.innerText = 'Create Product';
+                btn.disabled = false;
+            }
+        });
+
+        // Fetch Images
+        async function loadImages() {
+            const res = await fetch('/api/admin/images');
+            const images = await res.json();
+            const container = document.getElementById('images-container');
+            
+            // Group by file
+            const byFile = images.reduce((acc, img) => {
+                if(!acc[img.file]) acc[img.file] = [];
+                acc[img.file].push(img);
+                return acc;
+            }, {});
+
+            const titleMap = {
+                'index.html': 'Homepage / Landing',
+                'products/shilajit.html': 'Shilajit Product Page',
+                'products/sea-buckthorn.html': 'Sea Buckthorn Product Page',
+                'products/stevia.html': 'Stevia Product Page'
+            };
+
+            let html = '';
+            for(const [file, imgs] of Object.entries(byFile)) {
+                const niceTitle = titleMap[file] || file;
+                html += `
+                    <div class="mb-8 border-b border-gray-100 pb-6">
+                        <div class="mb-4">
+                            <h3 class="font-product-title text-xl text-forest font-bold">${niceTitle}</h3>
+                            <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">${file}</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                `;
+                
+                imgs.forEach((img, i) => {
+                    const id = `img-${file.replace(/[^a-z0-9]/gi, '')}-${i}`;
+                    const filename = img.src.split('/').pop() || 'image';
+                    html += `
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 p-3 flex flex-col">
+                            <div class="relative w-full h-24 rounded-lg overflow-hidden mb-3 bg-gray-50 flex items-center justify-center">
+                                <img src="${img.src}" class="max-w-full max-h-full object-contain p-1">
+                            </div>
+                            <div class="mt-auto space-y-2">
+                                <p class="text-[10px] text-gray-500 font-medium truncate text-center" title="${img.src}">${filename}</p>
+                                <input type="file" id="file-${id}" accept="image/*" class="w-full text-[10px] text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-[10px] file:font-semibold file:bg-cream-bg file:text-forest hover:file:bg-gold-accent hover:file:text-white transition-all cursor-pointer">
+                                <button onclick="replaceImage('${file}', '${img.src}', '${id}')" class="w-full bg-forest text-white py-1.5 rounded-full text-[10px] font-semibold hover:bg-opacity-90 transition-opacity">Upload & Replace</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        async function replaceImage(file, oldSrc, id) {
+            const fileInput = document.getElementById(`file-${id}`);
+            if(!fileInput.files[0]) return alert('Please select a file');
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            formData.append('file', file);
+            formData.append('oldSrc', oldSrc);
+
+            const res = await fetch('/api/admin/images/replace', {
+                method: 'POST',
+                body: formData
+            });
+
+            if(res.ok) {
+                alert('Image replaced successfully!');
+                loadImages(); // reload
+            } else {
+                alert('Failed to replace image.');
+            }
+        }
+
+        // Init
+        loadOrders();
+        loadProducts();
+        loadImages();
+    </script>
+</body>
+</html>
