@@ -71,7 +71,7 @@ app.get('/api/admin/orders', requireAuth, async (req, res) => {
         res.json(rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -82,7 +82,7 @@ app.get('/api/admin/products', requireAuth, async (req, res) => {
         res.json(rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -94,7 +94,7 @@ app.post('/api/admin/products/:id', requireAuth, async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -111,7 +111,7 @@ app.put('/api/admin/products/:id', requireAuth, async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -123,7 +123,7 @@ app.delete('/api/admin/products/:id', requireAuth, async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -159,7 +159,7 @@ app.post('/api/admin/products', requireAuth, upload.single('image'), async (req,
         res.json({ success: true });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Database error while creating product' });
+        res.status(500).json({ error: err.message });
     }
 });
 
