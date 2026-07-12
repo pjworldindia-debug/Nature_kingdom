@@ -109,19 +109,46 @@
 <body class="bg-cream-bg text-on-background min-h-screen">
 
 <!-- Top Navigation Bar -->
-<nav class="fixed w-full top-0 z-50 bg-cream-bg/95 backdrop-blur-md shadow-sm border-b border-border-warm">
-<div class="flex justify-between items-center max-w-[1200px] mx-auto px-8 h-20">
-<a href="/" class="flex items-center gap-3">
-<div class="flex items-center justify-center">
-  <img alt="Nature Kingdom Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
-</div>
-<div class="font-product-title text-2xl text-forest">
+<nav class="fixed w-full top-0 z-50 bg-cream-bg dark:bg-shilajit-forest backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center max-w-[1200px] mx-auto px-4 md:px-8 h-20">
+<a href="/" class="flex items-center gap-2 md:gap-3">
+<img alt="Nature Kingdom Logo" class="mix-blend-multiply h-10 w-10 md:h-12 md:w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+<div class="font-product-title text-xl md:text-2xl text-forest dark:text-primary-fixed-dim">
                 Nature Kingdom
             </div>
 </a>
-<div class="flex items-center gap-6">
-<a href="/" class="hover:text-forest transition-colors text-gray-text font-button-text">Continue Shopping</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-forest dark:text-primary-fixed font-bold border-b-2 border-gold-accent pb-1 font-label-caps text-label-caps" href="#story">Our Story</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/sea-buckthorn.html">Sea Buckthorn</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/shilajit.html">Shilajit</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="/products/stevia.html">Stevia</a>
+<a class="text-gray-text dark:text-outline-variant hover:text-forest dark:hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="https://www.shiprocket.in/shipment-tracking/" target="_blank">Track Order</a>
 </div>
+<div class="flex items-center gap-4 md:gap-6">
+<a href="/cart.html" class="hover:text-gold-accent transition-colors text-forest">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</a>
+<a href="/account/login.html" class="hover:text-gold-accent transition-colors text-forest">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</a>
+<!-- Hamburger Button (Mobile Only) -->
+<button id="mobile-menu-btn" class="md:hidden text-forest hover:text-gold-accent transition-colors flex items-center">
+    <span class="material-symbols-outlined text-3xl" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-cream-bg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col pt-24 px-8 pb-8 shadow-2xl">
+    <button id="mobile-close-btn" class="absolute top-6 right-6 text-forest">
+        <span class="material-symbols-outlined text-4xl">close</span>
+    </button>
+    <div class="flex flex-col gap-8 items-center text-center mt-12">
+        <a class="text-forest text-2xl font-product-title mobile-link" href="#story">Our Story</a>
+        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/sea-buckthorn.html">Sea Buckthorn</a>
+        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/shilajit.html">Shilajit</a>
+        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/stevia.html">Stevia</a>
+        <a class="text-forest text-2xl font-product-title mobile-link" href="https://www.shiprocket.in/shipment-tracking/" target="_blank">Track Order</a>
+    </div>
 </div>
 </nav>
 

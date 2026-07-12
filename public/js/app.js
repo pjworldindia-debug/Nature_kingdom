@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initImageLoading();
   initNavbarScroll();
+  initMobileMenu();
   initCsrfToken().then(syncGuestCart);
 });
 
@@ -23,16 +24,37 @@ function initImageLoading() {
 }
 
 function initNavbarScroll() {
-  const navbar = document.querySelector('.navbar');
+  const navbar = document.querySelector('.navbar') || document.querySelector('nav');
   if (!navbar) return;
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
+      navbar.classList.add('scrolled', 'shadow-md');
     } else {
-      navbar.classList.remove('scrolled');
+      navbar.classList.remove('scrolled', 'shadow-md');
     }
   });
+}
+
+function initMobileMenu() {
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileClose = document.getElementById('mobile-close-btn');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  if(mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+          mobileMenu.classList.remove('translate-x-full');
+      });
+      mobileClose.addEventListener('click', () => {
+          mobileMenu.classList.add('translate-x-full');
+      });
+      mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+              mobileMenu.classList.add('translate-x-full');
+          });
+      });
+  }
 }
 
 // Fetch CSRF token on load and make it available globally
