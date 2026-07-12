@@ -59,7 +59,19 @@ router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async 
         INSERT INTO order_items (order_id, product_id, name, price, quantity, subtotal)
         VALUES ($1, $2, $3, $4, $5, $6)
       `, [order.id, item.product_id, item.name, item.price, item.quantity, item.price * item.quantity]);
+
+      // Deduct inventory instantly within the transaction
+      await client.query(
+        'UPDATE products SET stock = stock - $1 WHERE id = $2',
+        [item.quantity, item.product_id]
+      );
     }
+    
+    // Clear cart immediately upon order creation
+    await client.query('DELETE FROM cart_items WHERE user_id = $1', [req.user.id]);
+    
+    // Commit the database transaction BEFORE calling the external API
+    await client.query('COMMIT');
     
     // 4. Construct PhonePe payload
     const payload = {
@@ -109,10 +121,6 @@ router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async 
     const data = await response.json();
 
     if (data.success && data.data && data.data.instrumentResponse && data.data.instrumentResponse.redirectInfo) {
-      await client.query('COMMIT');
-      // Clear cart
-      await pool.query('DELETE FROM cart_items WHERE user_id = $1', [req.user.id]);
-      
       res.json({ 
         success: true, 
         redirectUrl: data.data.instrumentResponse.redirectInfo.url,
@@ -123,7 +131,29 @@ router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async 
     }
 
   } catch (err) {
+    // If a database transaction is still active, rollback.
     await client.query('ROLLBACK');
+    
+    // If the error occurred AFTER the order was created (and committed), 
+    // we need to fail the order and refund the inventory.
+    if (err.message === 'Payment gateway timeout after retries' || err.message === 'Payment initiation failed') {
+       try {
+         await client.query('BEGIN');
+         const { rows: orderCheck } = await client.query('SELECT id, status FROM orders WHERE user_id = $1 ORDER BY id DESC LIMIT 1 FOR UPDATE', [req.user.id]);
+         if (orderCheck.length > 0 && orderCheck[0].status === 'pending') {
+            await client.query("UPDATE orders SET status = 'failed', payment_status = 'failed' WHERE id = $1", [orderCheck[0].id]);
+            const { rows: items } = await client.query('SELECT product_id, quantity FROM order_items WHERE order_id = $1', [orderCheck[0].id]);
+            for (const item of items) {
+               await client.query('UPDATE products SET stock = stock + $1 WHERE id = $2', [item.quantity, item.product_id]);
+            }
+         }
+         await client.query('COMMIT');
+       } catch (rollbackErr) {
+         await client.query('ROLLBACK');
+         console.error('Error during inventory refund:', rollbackErr);
+       }
+    }
+    
     console.error(err);
     res.status(500).json({ error: err.message || 'Server error' });
   } finally {
@@ -163,7 +193,7 @@ router.post('/webhook', async (req, res) => {
           [merchantTransactionId]
         );
         
-        if (orderCheck.length > 0 && orderCheck[0].status === 'paid') {
+        if (orderCheck.length > 0 && orderCheck[0].status !== 'pending') {
           await client.query('ROLLBACK');
           return res.status(200).send('OK - Idempotent');
         }
@@ -174,28 +204,36 @@ router.post('/webhook', async (req, res) => {
           SET status = 'paid', payment_status = 'paid', phonepe_transaction_id = $1
           WHERE order_number = $2
         `, [providerReferenceId, merchantTransactionId]);
-
-        // Deduct inventory for each ordered item
-        const { rows: orderRows } = await client.query(
-          'SELECT id FROM orders WHERE order_number = $1', [merchantTransactionId]
+        // Inventory was already deducted at checkout.
+      } else {
+        const { rows: orderCheck } = await client.query(
+          'SELECT status, id FROM orders WHERE order_number = $1 FOR UPDATE', 
+          [merchantTransactionId]
         );
-        if (orderRows.length > 0) {
+        
+        if (orderCheck.length > 0 && orderCheck[0].status !== 'pending') {
+          await client.query('ROLLBACK');
+          return res.status(200).send('OK - Idempotent');
+        }
+
+        await client.query(`
+          UPDATE orders 
+          SET status = 'failed', payment_status = 'failed', phonepe_transaction_id = $1
+          WHERE order_number = $2
+        `, [providerReferenceId, merchantTransactionId]);
+
+        // Refund inventory for failed webhook
+        if (orderCheck.length > 0) {
           const { rows: orderItems } = await client.query(
-            'SELECT product_id, quantity FROM order_items WHERE order_id = $1', [orderRows[0].id]
+            'SELECT product_id, quantity FROM order_items WHERE order_id = $1', [orderCheck[0].id]
           );
           for (const item of orderItems) {
             await client.query(
-              'UPDATE products SET stock = GREATEST(0, stock - $1) WHERE id = $2',
+              'UPDATE products SET stock = stock + $1 WHERE id = $2',
               [item.quantity, item.product_id]
             );
           }
         }
-      } else {
-        await client.query(`
-          UPDATE orders 
-          SET status = 'pending', payment_status = 'failed', phonepe_transaction_id = $1
-          WHERE order_number = $2
-        `, [providerReferenceId, merchantTransactionId]);
       }
       
       await client.query('COMMIT');

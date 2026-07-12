@@ -27,9 +27,47 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .tab-btn.active { background-color: #e8f0e9; color: #2c4a2e; border-right: 3px solid #7a9e7e; font-weight: bold; }
+        
+        /* Toast Styles */
+        #toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+        .toast {
+            min-width: 280px;
+            padding: 14px 20px;
+            border-radius: 9999px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: auto;
+        }
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast.success { background-color: #2c4a2e; border: 1px solid #3d6640; }
+        .toast.error { background-color: #dc2626; border: 1px solid #ef4444; }
     </style>
 </head>
 <body class="bg-cream-bg flex h-screen overflow-hidden font-body-main">
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
     
     <!-- Sidebar -->
     <aside class="w-64 bg-white border-r flex flex-col">
@@ -147,6 +185,24 @@
     </main>
 
     <script>
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            toast.innerHTML = `<span class="material-symbols-outlined">${icon}</span> ${message}`;
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
         // Auth Check
         async function checkAuth() {
             const res = await fetch('/api/admin/check-auth');
@@ -299,14 +355,14 @@
                     body: JSON.stringify({ name, tagline, price, stock, kingdom, is_active })
                 });
                 if (res.ok) {
-                    alert('Product updated successfully!');
+                    showToast('Product updated successfully!');
                     loadProducts();
                 } else {
-                    alert('Error updating product');
+                    showToast('Error updating product', 'error');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Error updating product');
+                showToast('Error updating product', 'error');
             }
         }
 
@@ -315,33 +371,33 @@
             try {
                 const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
                 if (res.ok) {
-                    alert('Product deleted successfully!');
+                    showToast('Product deleted successfully!');
                     loadProducts();
                 } else {
-                    alert('Error deleting product');
+                    showToast('Error deleting product', 'error');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Error deleting product');
+                showToast('Error deleting product', 'error');
             }
         }
 
         async function uploadProductImage(id) {
             const fileInput = document.getElementById(`img-${id}`);
-            if (!fileInput.files[0]) return alert('Please select an image file first.');
+            if (!fileInput.files[0]) return showToast('Please select an image file first.', 'error');
             const formData = new FormData();
             formData.append('image', fileInput.files[0]);
             try {
                 const res = await fetch(`/api/admin/products/${id}/image`, { method: 'POST', body: formData });
                 if (res.ok) {
-                    alert('Image updated successfully!');
+                    showToast('Image updated successfully!');
                     loadProducts();
                 } else {
-                    alert('Error uploading image');
+                    showToast('Error uploading image', 'error');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Error uploading image');
+                showToast('Error uploading image', 'error');
             }
         }
 
@@ -366,16 +422,16 @@
                     body: formData
                 });
                 if(res.ok) {
-                    alert('Product created successfully!');
+                    showToast('Product created successfully!');
                     document.getElementById('add-product-modal').classList.add('hidden');
                     e.target.reset();
                     loadProducts();
                 } else {
-                    alert('Error creating product');
+                    showToast('Error creating product', 'error');
                 }
             } catch(err) {
                 console.error(err);
-                alert('Error creating product');
+                showToast('Error creating product', 'error');
             } finally {
                 btn.innerText = 'Create Product';
                 btn.disabled = false;
@@ -438,7 +494,7 @@
 
         async function replaceImage(file, oldSrc, id) {
             const fileInput = document.getElementById(`file-${id}`);
-            if(!fileInput.files[0]) return alert('Please select a file');
+            if(!fileInput.files[0]) return showToast('Please select a file', 'error');
 
             const formData = new FormData();
             formData.append('image', fileInput.files[0]);
@@ -451,10 +507,10 @@
             });
 
             if(res.ok) {
-                alert('Image replaced successfully!');
+                showToast('Image replaced successfully!');
                 loadImages(); // reload
             } else {
-                alert('Failed to replace image.');
+                showToast('Failed to replace image.', 'error');
             }
         }
 
