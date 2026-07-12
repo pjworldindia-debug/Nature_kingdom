@@ -203,15 +203,34 @@
             }, 3000);
         }
 
-        // Auth Check
+        // Token Injector
+        const token = localStorage.getItem('adminToken');
+        if (!token) window.location.href = '/login.html';
+        
+        const originalFetch = window.fetch;
+        window.fetch = function() {
+            let [resource, config] = arguments;
+            if(!config) config = {};
+            if(!config.headers) config.headers = {};
+            if(!(config.headers instanceof Headers)) {
+                config.headers['Authorization'] = 'Bearer ' + token;
+            }
+            return originalFetch(resource, config);
+        };
+
+        // Auth Check (deprecated since we check token, but keeping for safety)
         async function checkAuth() {
             const res = await fetch('/api/admin/check-auth');
-            if(!res.ok) window.location.href = '/login.html';
+            if(!res.ok) {
+                localStorage.removeItem('adminToken');
+                window.location.href = '/login.html';
+            }
         }
         checkAuth();
 
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', async () => {
+            localStorage.removeItem('adminToken');
             await fetch('/api/admin/logout', { method: 'POST' });
             window.location.href = '/login.html';
         });

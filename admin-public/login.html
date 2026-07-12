@@ -55,6 +55,8 @@
                     body: JSON.stringify({ username, password })
                 });
                 if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('adminToken', data.token);
                     window.location.href = '/dashboard.html';
                 } else {
                     document.getElementById('errorMsg').classList.remove('hidden');
@@ -65,9 +67,9 @@
         });
 
         // Check if already logged in
-        fetch('/api/admin/check-auth').then(res => {
-            if(res.ok) window.location.href = '/dashboard.html';
-        });
+        if (localStorage.getItem('adminToken')) {
+            window.location.href = '/dashboard.html';
+        }
     </script>
 </body>
 </html>

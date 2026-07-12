@@ -22,10 +22,11 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'admin-public')));
 
 // Root redirect
-app.get('/', (req, res) => res.redirect('/login.html'));
+app.get('/', (req, res) => res.redirect('/dashboard.html'));
 // Auth Middleware
 const requireAuth = (req, res, next) => {
-    if (req.session.isAuthenticated) {
+    const authHeader = req.headers.authorization;
+    if (authHeader === 'Bearer admin_secret_token_123' || req.session.isAuthenticated) {
         next();
     } else {
         res.status(401).json({ error: 'Unauthorized' });
@@ -36,8 +37,8 @@ const requireAuth = (req, res, next) => {
 app.post('/api/admin/login', (req, res) => {
     const { username, password } = req.body;
     if (username === 'pjworld26@gmail.com' && password === 'PJworldindia@26') {
-        req.session.isAuthenticated = true;
-        res.json({ success: true });
+        req.session.isAuthenticated = true; // Keep for fallback
+        res.json({ success: true, token: 'admin_secret_token_123' });
     } else {
         res.status(401).json({ error: 'Invalid credentials' });
     }
