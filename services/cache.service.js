@@ -29,6 +29,13 @@ class CacheService {
     }
   }
 
+  async del(key) {
+    this.L1.del(key);
+    if (redis.isReady) {
+      await redis.del(`nk:cache:${key}`);
+    }
+  }
+
   async invalidate(pattern) {
     this.L1.flushAll(); // For simplicity, flush all L1 on any invalidation
     if (redis.isReady) {
