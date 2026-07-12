@@ -65,11 +65,22 @@ router.post('/logout', (req, res) => {
 });
 
 // ── GOOGLE OAUTH ──────────────────────────────────────────────────────────────
-router.get('/google', passport.authenticate('google'));
+router.get('/google', (req, res, next) => {
+  if (req.query.returnTo) {
+    req.session.returnTo = req.query.returnTo;
+  } else if (req.headers.referer) {
+    req.session.returnTo = req.headers.referer;
+  }
+  next();
+}, passport.authenticate('google'));
 
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/account/login.html?error=oauth_failed' }),
-  (req, res) => res.redirect('/account/dashboard.html')
+  (req, res) => {
+    const returnTo = req.session.returnTo || '/account/dashboard.html';
+    delete req.session.returnTo;
+    res.redirect(returnTo);
+  }
 );
 
 // ── GITHUB OAUTH ──────────────────────────────────────────────────────────────
