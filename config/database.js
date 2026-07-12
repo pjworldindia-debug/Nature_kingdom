@@ -10,7 +10,7 @@ const pool = new Pool({
   max:      20,              // max pool connections
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
-  ssl: false                 // local socket or docker — no SSL needed
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
 });
 
 // Test connection on startup
