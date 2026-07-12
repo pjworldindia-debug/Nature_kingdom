@@ -466,11 +466,16 @@
                     e.target.reset();
                     loadProducts();
                 } else {
-                    showToast('Error creating product', 'error');
+                    const errText = await res.text();
+                    let errMsg = 'Server error';
+                    try { errMsg = JSON.parse(errText).error; } catch(e) { 
+                        if (res.status === 413) errMsg = 'Image file is too large (over 1MB). Please compress it or update Nginx limits.';
+                    }
+                    showToast('Error creating product: ' + errMsg, 'error');
                 }
             } catch(err) {
                 console.error(err);
-                showToast('Error creating product', 'error');
+                showToast('Error creating product: ' + err.message, 'error');
             } finally {
                 btn.innerText = 'Create Product';
                 btn.disabled = false;
