@@ -5,7 +5,7 @@ module.exports = {
     instances:          'max',           // One per CPU core
     exec_mode:          'cluster',
     max_memory_restart: '512M',
-    env_production: {
+    env: {
       NODE_ENV: 'production',
       PORT:     2431,
     },
@@ -18,7 +18,7 @@ module.exports = {
     script:             'admin-server.js',
     instances:          1,
     exec_mode:          'fork',
-    env_production: {
+    env: {
       NODE_ENV: 'production',
       ADMIN_PORT: 3001,
     },
