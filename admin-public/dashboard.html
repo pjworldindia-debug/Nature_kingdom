@@ -554,7 +554,11 @@
                 showToast('Image replaced successfully!');
                 loadImages(); // reload
             } else {
-                showToast('Failed to replace image.', 'error');
+                if (res.status === 413) {
+                    showToast('Image file is too large (over 1MB). Please update Nginx limits.', 'error');
+                } else {
+                    showToast('Failed to replace image.', 'error');
+                }
             }
         }
 

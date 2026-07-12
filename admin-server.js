@@ -200,6 +200,8 @@ app.get('/api/admin/images', requireAuth, (req, res) => {
                 let match;
                 while ((match = imgRegex.exec(content)) !== null) {
                     const src = match[1];
+                    if (src.includes('${')) continue; // Ignore Javascript placeholders
+                    
                     let alt = 'Unknown';
                     const altMatch = match[0].match(/alt="([^"]+)"/i);
                     if (altMatch) alt = altMatch[1];
