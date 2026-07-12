@@ -13,5 +13,18 @@ module.exports = {
     out_file:        'logs/out.log',
     log_date_format: 'YYYY-MM-DD HH:mm Z',
     watch:           false,
+  }, {
+    name:               'nature-kingdom-admin',
+    script:             'admin-server.js',
+    instances:          1,
+    exec_mode:          'fork',
+    env_production: {
+      NODE_ENV: 'production',
+      PORT:     3001,
+    },
+    error_file:      'logs/admin-error.log',
+    out_file:        'logs/admin-out.log',
+    log_date_format: 'YYYY-MM-DD HH:mm Z',
+    watch:           false,
   }]
 };
