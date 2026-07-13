@@ -112,20 +112,93 @@
         <div class="absolute -top-16 -right-16 w-32 h-32 bg-sage-accent/10 rounded-full blur-2xl"></div>
         <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-gold-accent/10 rounded-full blur-2xl"></div>
 
-        <div class="relative z-10">
-            <div class="w-20 h-20 bg-forest rounded-full flex items-center justify-center text-white shadow-lg mx-auto mb-8">
-                <span class="material-symbols-outlined text-[40px]">check</span>
+        <div class="relative z-10" id="status-container">
+            <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 shadow-lg mx-auto mb-8 animate-pulse">
+                <span class="material-symbols-outlined text-[40px]">hourglass_empty</span>
             </div>
             
-            <h1 class="font-product-title text-4xl text-forest mb-4">Payment Successful</h1>
+            <h1 class="font-product-title text-4xl text-forest mb-4">Verifying Payment...</h1>
             <p class="font-body-main text-gray-text mb-10 text-lg leading-relaxed">
-                Thank you for choosing Nature Kingdom. Your order has been placed successfully and is now being processed. You will receive an email confirmation shortly.
+                Please wait while we confirm your transaction with PhonePe.
             </p>
-            
-            <a href="/account/dashboard.html" class="inline-block px-10 py-4 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md">
-                Go to Dashboard
-            </a>
         </div>
     </div>
+    
+<script>
+    async function checkStatus() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId') || urlParams.get('transactionId');
+        const container = document.getElementById('status-container');
+
+        if (!orderId) {
+            container.innerHTML = `
+                <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg mx-auto mb-8">
+                    <span class="material-symbols-outlined text-[40px]">error</span>
+                </div>
+                <h1 class="font-product-title text-4xl text-red-600 mb-4">Invalid Request</h1>
+                <p class="font-body-main text-gray-text mb-10 text-lg leading-relaxed">No order ID provided.</p>
+                <a href="/" class="inline-block px-10 py-4 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md">Go to Home</a>
+            `;
+            return;
+        }
+
+        try {
+            let attempt = 0;
+            let status = 'pending';
+            
+            // Poll for up to 10 seconds (5 attempts * 2s) for the webhook to complete
+            while (attempt < 5 && status === 'pending') {
+                const res = await fetch(`/api/payment/status/${orderId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    status = data.status;
+                } else {
+                    break;
+                }
+                
+                if (status === 'pending') {
+                    await new Promise(r => setTimeout(r, 2000));
+                    attempt++;
+                }
+            }
+
+            if (status === 'paid') {
+                container.innerHTML = `
+                    <div class="w-20 h-20 bg-forest rounded-full flex items-center justify-center text-white shadow-lg mx-auto mb-8">
+                        <span class="material-symbols-outlined text-[40px]">check</span>
+                    </div>
+                    <h1 class="font-product-title text-4xl text-forest mb-4">Payment Successful</h1>
+                    <p class="font-body-main text-gray-text mb-10 text-lg leading-relaxed">
+                        Thank you for choosing Nature Kingdom. Your order has been placed successfully and is now being processed. You will receive an email confirmation shortly.
+                    </p>
+                    <a href="/account/dashboard.html" class="inline-block px-10 py-4 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md">Go to Dashboard</a>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg mx-auto mb-8">
+                        <span class="material-symbols-outlined text-[40px]">close</span>
+                    </div>
+                    <h1 class="font-product-title text-4xl text-red-600 mb-4">Payment Failed</h1>
+                    <p class="font-body-main text-gray-text mb-10 text-lg leading-relaxed">
+                        Your transaction could not be completed or was cancelled. Please try again.
+                    </p>
+                    <a href="/cart.html" class="inline-block px-10 py-4 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md">Return to Cart</a>
+                `;
+            }
+        } catch (e) {
+            console.error(e);
+            container.innerHTML = `
+                <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg mx-auto mb-8">
+                    <span class="material-symbols-outlined text-[40px]">error</span>
+                </div>
+                <h1 class="font-product-title text-4xl text-red-600 mb-4">Error Checking Status</h1>
+                <p class="font-body-main text-gray-text mb-10 text-lg leading-relaxed">Please check your dashboard to confirm if the order was successful.</p>
+                <a href="/account/dashboard.html" class="inline-block px-10 py-4 bg-forest text-on-primary font-button-text text-button-text rounded-full hover:bg-forest-light transition-all shadow-md">Go to Dashboard</a>
+            `;
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', checkStatus);
+</script>
 </body>
 </html>

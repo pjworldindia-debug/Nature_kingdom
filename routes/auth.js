@@ -71,7 +71,9 @@ router.get('/google', (req, res, next) => {
   } else if (req.headers.referer) {
     req.session.returnTo = req.headers.referer;
   }
-  next();
+  req.session.save(() => {
+    next();
+  });
 }, passport.authenticate('google'));
 
 router.get('/google/callback',

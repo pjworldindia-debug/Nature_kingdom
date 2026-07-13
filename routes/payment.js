@@ -18,6 +18,7 @@ const BASE_URL = PHONEPE_ENV === 'LIVE'
 
 // Initiate Payment (CSRF protected)
 router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async (req, res) => {
+  const { shipping_name, shipping_address } = req.body;
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -50,9 +51,9 @@ router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async 
 
     // 3. Create Order in DB
     const { rows: [order] } = await client.query(`
-      INSERT INTO orders (user_id, order_number, subtotal, shipping, total, status)
-      VALUES ($1, $2, $3, $4, $5, 'pending') RETURNING id
-    `, [req.user.id, orderNumber, subtotal, shipping, total]);
+      INSERT INTO orders (user_id, order_number, subtotal, shipping, total, status, shipping_name, shipping_address)
+      VALUES ($1, $2, $3, $4, $5, 'pending', $6, $7) RETURNING id
+    `, [req.user.id, orderNumber, subtotal, shipping, total, shipping_name, shipping_address]);
 
     for (const item of cartItems) {
       await client.query(`
@@ -248,6 +249,26 @@ router.post('/webhook', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Webhook error');
+  }
+});
+
+// Get Order Status
+router.get('/status/:orderNumber', isAuthenticated, async (req, res) => {
+  try {
+    const { orderNumber } = req.params;
+    const { rows } = await pool.query(
+      'SELECT status, payment_status FROM orders WHERE order_number = $1 AND user_id = $2',
+      [orderNumber, req.user.id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    res.json({ status: rows[0].status, payment_status: rows[0].payment_status });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

@@ -3,6 +3,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Nature Kingdom | Himalayan Wisdom for Modern Life</title>
+<link rel="icon" href="/images/logo.png" />
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -155,7 +156,7 @@
 <nav class="fixed w-full top-0 z-50 bg-cream-bg dark:bg-shilajit-forest backdrop-blur-md shadow-sm">
 <div class="flex justify-between items-center max-w-[1200px] mx-auto px-4 md:px-8 h-20">
 <a href="/" class="flex items-center gap-2 md:gap-3">
-<img alt="Nature Kingdom Logo" class="mix-blend-multiply h-10 w-10 md:h-12 md:w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+<img alt="Nature Kingdom Logo" class="h-10 w-10 md:h-12 md:w-12 object-contain" src="/images/logo.png"/>
 <div class="font-product-title text-xl md:text-2xl text-forest dark:text-primary-fixed-dim">
                 Nature Kingdom
             </div>
@@ -181,7 +182,7 @@
 </div>
 </div>
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 bg-cream-bg z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col pt-24 px-8 pb-8 shadow-2xl">
+<div id="mobile-menu" class="fixed inset-0 bg-surface-warm z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col pt-24 px-8 pb-8 shadow-2xl">
     <button id="mobile-close-btn" class="absolute top-6 right-6 text-forest">
         <span class="material-symbols-outlined text-4xl">close</span>
     </button>
@@ -299,7 +300,7 @@
 <div class="max-w-[1200px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-stack-lg">
 <div class="space-y-6">
 <div class="flex items-center gap-3">
-<img alt="Nature Kingdom Logo" class="mix-blend-multiply h-10 w-10 object-contain brightness-0 grayscale opacity-70 dark:brightness-100 dark:grayscale-0 dark:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsAd-XkVmWe0smP9TkwF9h5btYW0p1J9uTUCrubz4HGcW0nBA5HKtYVtsRHd1NbdWuFgoScmpTl6_4awxr9BmYYInlTAxZ-SgzO-3FYrrJe5hL6MNczlk3We_IqsVvsgOMHSEpsDuB0L7IhPkLfuidP5P_4IeL0D2_WxQB43VqVCp0hKh1QgKf9-_IyNH6C0h9dxGuDypiR9RiFZx-sF0v8ncQITUSNAIoU-lHAPQX55BOzTcnuqYDuLwweTSkq1B7V4oYB3u7kB8V"/>
+<img alt="Nature Kingdom Logo" class="h-10 w-10 object-contain brightness-0 grayscale opacity-70 dark:brightness-100 dark:grayscale-0 dark:opacity-100" src="/images/logo.png"/>
 <div class="font-product-title text-2xl text-forest dark:text-primary-fixed">Nature Kingdom</div>
 </div>
 <p class="font-body-main text-body-main text-gray-text">Elevating modern wellness through the ancient wisdom of the Himalayas.</p>
@@ -340,9 +341,9 @@
 </footer>
 <script>
     // Add to cart function for the buttons
-    async function addToCart(productId) {
+    async function addToCart(productId, overrideQty) {
       const qtyEl = document.getElementById('qty');
-      const qty = qtyEl ? (parseInt(qtyEl.value) || 1) : 1;
+      const qty = overrideQty ? parseInt(overrideQty) : (qtyEl ? (parseInt(qtyEl.value) || 1) : 1);
       try {
         const res = await fetch('/api/cart', {
           method: 'POST',
@@ -446,7 +447,14 @@
                                     <p class="font-stat-value text-xl text-forest">₹${Number(p.price).toFixed(2)}</p>
                                 </div>
                             </a>
-                            <button type="button" onclick="addToCart(${p.id})" class="mt-6 w-full py-3 border-2 border-forest text-forest font-button-text text-button-text rounded-full hover:bg-forest hover:text-white transition-all">Add to Bag</button>
+                            <div class="mt-6 flex gap-2">
+                                <div class="flex items-center justify-between border-2 border-forest rounded-full px-2 w-28 bg-white">
+                                    <button type="button" class="text-forest p-1 focus:outline-none flex-1 text-center font-bold text-lg" onclick="event.preventDefault(); const q=this.nextElementSibling; if(q.value>1) q.value=parseInt(q.value)-1;">-</button>
+                                    <input type="number" id="qty-card-${p.id}" class="w-10 text-center text-forest p-0 border-none focus:ring-0 text-sm bg-transparent font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value="1" min="1" max="99" />
+                                    <button type="button" class="text-forest p-1 focus:outline-none flex-1 text-center font-bold text-lg" onclick="event.preventDefault(); const q=this.previousElementSibling; if(q.value<99) q.value=parseInt(q.value)+1;">+</button>
+                                </div>
+                                <button type="button" onclick="event.preventDefault(); addToCart(${p.id}, document.getElementById('qty-card-${p.id}').value)" class="flex-1 py-3 border-2 border-forest bg-forest text-white font-button-text text-button-text rounded-full hover:bg-forest-light transition-all">Add to Bag</button>
+                            </div>
                         </div>
                         `;
                     }).join('');

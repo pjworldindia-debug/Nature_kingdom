@@ -190,6 +190,21 @@
                     <span id="cartTotal">₹0.00</span>
                 </div>
                 
+                <div class="mb-6 space-y-3">
+                    <h3 class="font-product-title text-xl text-forest">Shipping Address</h3>
+                    <input type="text" id="shipName" placeholder="Full Name" class="w-full px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                    <input type="text" id="shipLine1" placeholder="Address Line 1" class="w-full px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                    <input type="text" id="shipLine2" placeholder="Address Line 2 (Optional)" class="w-full px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors">
+                    <div class="flex gap-3">
+                        <input type="text" id="shipCity" placeholder="City" class="w-1/2 px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                        <input type="text" id="shipState" placeholder="State" class="w-1/2 px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                    </div>
+                    <div class="flex gap-3">
+                        <input type="text" id="shipPin" placeholder="PIN Code" class="w-1/2 px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                        <input type="text" id="shipCountry" placeholder="Country" value="India" class="w-1/2 px-4 py-3 rounded-lg border border-border-warm bg-surface focus:border-forest outline-none transition-colors" required>
+                    </div>
+                </div>
+
                 <button id="checkoutBtn" class="w-full py-4 bg-forest text-on-primary font-button-text rounded-full hover:bg-forest-light transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
                     Proceed to Checkout
                 </button>
@@ -367,13 +382,37 @@
                 return;
             }
             
+            const shipName = document.getElementById('shipName').value;
+            const shipLine1 = document.getElementById('shipLine1').value;
+            const shipCity = document.getElementById('shipCity').value;
+            const shipState = document.getElementById('shipState').value;
+            const shipPin = document.getElementById('shipPin').value;
+            const shipCountry = document.getElementById('shipCountry').value;
+            
+            if (!shipName || !shipLine1 || !shipCity || !shipState || !shipPin || !shipCountry) {
+                checkoutError.innerText = 'Please fill out all required shipping fields.';
+                checkoutError.classList.remove('hidden');
+                return;
+            }
+
             checkoutBtn.disabled = true;
             checkoutBtn.innerText = 'Processing...';
             try {
                 const res = await fetch('/api/payment/initiate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ _csrf: window.csrfToken })
+                    body: JSON.stringify({
+                        _csrf: window.csrfToken,
+                        shipping_name: shipName,
+                        shipping_address: {
+                            line1: shipLine1,
+                            line2: document.getElementById('shipLine2').value,
+                            city: shipCity,
+                            state: shipState,
+                            pin: shipPin,
+                            country: shipCountry
+                        }
+                    })
                 });
                 
                 if (res.ok) {

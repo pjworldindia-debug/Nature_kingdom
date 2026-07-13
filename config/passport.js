@@ -163,7 +163,8 @@ passport.use('google', new GoogleStrategy(
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'placeholder',
     callbackURL:  `${process.env.APP_URL || 'http://localhost:3000'}/api/auth/google/callback`,
     scope:        ['profile', 'email'],
-    state:        true     // CSRF protection for OAuth flow
+    state:        true,     // CSRF protection for OAuth flow
+    proxy:        true
   },
   (accessToken, refreshToken, profile, done) =>
     handleOAuthCallback('google', profile, accessToken, refreshToken, done)
