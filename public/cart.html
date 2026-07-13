@@ -400,7 +400,11 @@
             try {
                 const res = await fetch('/api/payment/initiate', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'CSRF-Token': window.csrfToken,
+                        'X-CSRF-Token': window.csrfToken
+                    },
                     body: JSON.stringify({
                         _csrf: window.csrfToken,
                         shipping_name: shipName,
