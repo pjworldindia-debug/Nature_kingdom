@@ -17,7 +17,7 @@ const BASE_URL = PHONEPE_ENV === 'LIVE'
   : 'https://api-preprod.phonepe.com/apis/pg-sandbox';
 
 // Initiate Payment (CSRF protected)
-router.post('/initiate', csrfProtection, isAuthenticated, paymentLimiter, async (req, res) => {
+router.post('/initiate', isAuthenticated, paymentLimiter, async (req, res) => {
   const { shipping_name, shipping_address } = req.body;
   const client = await pool.connect();
   try {
