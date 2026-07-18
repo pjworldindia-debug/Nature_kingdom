@@ -1,11 +1,11 @@
 const express = require('express');
 const pool = require('../config/database');
-const { requireAuth } = require('../middleware/auth.middleware');
+const { isAuthenticated } = require('../middleware/auth.middleware');
 
 const router = express.Router();
 
 // GET all addresses for the authenticated user
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
   try {
     const { rows } = await pool.query(
       'SELECT * FROM user_addresses WHERE user_id = $1 ORDER BY created_at DESC',
@@ -19,7 +19,7 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // POST a new address
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
   const { street_address, city, state, postal_code, country } = req.body;
   if (!street_address || !city || !state || !postal_code) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -39,7 +39,7 @@ router.post('/', requireAuth, async (req, res) => {
 });
 
 // DELETE an address
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', isAuthenticated, async (req, res) => {
   const { id } = req.params;
   try {
     const { rowCount } = await pool.query(
