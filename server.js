@@ -108,6 +108,7 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const cartRoutes = require('./routes/cart');
+const addressesRoutes = require('./routes/addresses');
 // const orderRoutes = require('./routes/orders'); // Skipping orders for brevity if not implemented fully yet
 const paymentRoutes = require('./routes/payment');
 
@@ -116,6 +117,7 @@ const { authLimiter } = require('./middleware/rateLimit.middleware');
 app.use('/api/auth', csrfProtection, authLimiter, authRoutes);
 app.use('/api/products', csrfProtection, productRoutes);
 app.use('/api/cart', csrfProtection, cartRoutes);
+app.use('/api/addresses', csrfProtection, addressesRoutes);
 // app.use('/api/orders', csrfProtection, orderRoutes);
 app.use('/api/payment', paymentRoutes);
 

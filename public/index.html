@@ -172,27 +172,12 @@
 <a href="/cart.html" class="hover:text-gold-accent transition-colors text-forest">
 <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
 </a>
-<a href="/account/login.html" class="hover:text-gold-accent transition-colors text-forest">
+<a href="/account/dashboard.html" class="hover:text-gold-accent transition-colors text-forest">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 </a>
-<!-- Hamburger Button (Mobile Only) -->
-<button id="mobile-menu-btn" class="md:hidden text-forest hover:text-gold-accent transition-colors flex items-center">
-    <span class="material-symbols-outlined text-3xl" data-icon="menu">menu</span>
-</button>
+<!-- Shop Now Button (Mobile Only) -->
+<a href="/#collection" class="md:hidden bg-forest text-on-primary px-5 py-2 rounded-full font-button-text text-sm hover:bg-forest-light transition-all shadow-md ml-2">Shop Now</a>
 </div>
-</div>
-<!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 bg-surface-warm z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col pt-24 px-8 pb-8 shadow-2xl overflow-y-auto">
-    <button id="mobile-close-btn" class="absolute top-6 right-6 text-forest">
-        <span class="material-symbols-outlined text-4xl">close</span>
-    </button>
-    <div class="flex flex-col gap-8 items-center text-center mt-12">
-        <a class="text-forest text-2xl font-product-title mobile-link" href="#story">Our Story</a>
-        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/sea-buckthorn.html">Sea Buckthorn</a>
-        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/shilajit.html">Shilajit</a>
-        <a class="text-forest text-2xl font-product-title mobile-link" href="/products/stevia.html">Stevia</a>
-        <a class="text-forest text-2xl font-product-title mobile-link" href="https://www.shiprocket.in/shipment-tracking/" target="_blank">Track Order</a>
-    </div>
 </div>
 </nav>
 <!-- Hero Section -->
@@ -347,7 +332,12 @@
       try {
         const res = await fetch('/api/cart', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          headers: { 
+            'Content-Type': 'application/json',
+            'CSRF-Token': window.csrfToken,
+            'X-CSRF-Token': window.csrfToken
+          },
           body: JSON.stringify({ productId: productId, quantity: qty, _csrf: window.csrfToken })
         });
         
@@ -402,16 +392,7 @@
         }
     });
 
-    // Mobile Menu Toggle Logic
-    const mobileBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileClose = document.getElementById('mobile-close-btn');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-
-    if(mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('translate-x-full');
-        });
+    );
         mobileClose.addEventListener('click', () => {
             mobileMenu.classList.add('translate-x-full');
         });

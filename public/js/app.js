@@ -90,7 +90,12 @@ async function syncGuestCart() {
   try {
     const res = await fetch('/api/cart/sync', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      headers: { 
+        'Content-Type': 'application/json',
+        'CSRF-Token': window.csrfToken,
+        'X-CSRF-Token': window.csrfToken
+      },
       body: JSON.stringify({ cart: guestCart, _csrf: window.csrfToken })
     });
     
